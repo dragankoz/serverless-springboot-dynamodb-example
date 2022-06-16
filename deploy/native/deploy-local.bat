@@ -1,0 +1,1 @@
+sam local start-api -t template-dev-docker.yaml --warm-containers lazy

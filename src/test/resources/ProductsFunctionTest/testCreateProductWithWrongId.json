@@ -1,0 +1,4 @@
+{
+  "reason": "Bad Request",
+  "messageDetail": "Product id path parameter does not match product id value"
+}

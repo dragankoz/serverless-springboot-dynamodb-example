@@ -1,0 +1,7 @@
+# Declare text file types
+*.sh                            text eol=lf
+mvnw                            text eol=lf
+src/shell/native/bootstrap      text eol=lf
+*.bat                           text eol=crlf
+*.cmd                           text eol=crlf
+

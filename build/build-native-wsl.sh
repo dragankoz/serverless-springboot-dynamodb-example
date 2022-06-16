@@ -1,0 +1,1 @@
+./mvnw clean integration-test -Pnative

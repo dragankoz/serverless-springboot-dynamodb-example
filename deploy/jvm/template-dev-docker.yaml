@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-springboot-example-jvm
+  Example SAM Template for lambda-springboot
+
+Globals:
+  Function:
+    Tracing: Active
+    CodeUri: ../../target/springboot-lambda-function-aws.jar
+    Handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    Runtime: java11
+    Timeout: 90
+    MemorySize: 512
+    Environment:
+      Variables:
+        PRODUCT_TABLE_NAME: !Ref ProductsTable
+        SPRING_PROFILES_ACTIVE: dev-docker
+
+Resources:
+  ProductApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Name: My Lambda springboot JVM Example API
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: ../../target/api-docs.yaml
+
+  GetProductByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          FUNCTION_NAME: getProductById
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        GetRequestById:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ProductApi
+            Path: /products/{id}
+            Method: get
+
+  GetProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          FUNCTION_NAME: getProducts
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ProductApi
+            Path: /products
+            Method: get
+
+  CreateUpdateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          FUNCTION_NAME: createUpdateProduct
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        PutRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ProductApi
+            Path: /products/{id}
+            Method: put
+
+  DeleteProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          FUNCTION_NAME: deleteProduct
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        PutRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ProductApi
+            Path: /products/{id}
+            Method: delete
+
+  ProductsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'PK'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'PK'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage for Springboot example function"
+    Value: !Sub "https://${ProductApi}.execute-api.${AWS::Region}.amazonaws.com/prod/products"
