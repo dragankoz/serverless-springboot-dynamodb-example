@@ -29,7 +29,10 @@ Resources:
           Parameters:
             Location: ../../target/api-docs.yaml
       Auth:
-        Authorizers: NONE
+        DefaultAuthorizer: AWS_IAM
+        Authorizers:
+          Dummy:
+            FunctionArn: !GetAtt GetProductByIdFunction.Arn
 
   GetProductByIdFunction:
     Type: AWS::Serverless::Function
@@ -47,6 +50,8 @@ Resources:
             RestApiId: !Ref ProductApi
             Path: /products/{id}
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   GetProductsFunction:
     Type: AWS::Serverless::Function
@@ -64,6 +69,8 @@ Resources:
             RestApiId: !Ref ProductApi
             Path: /products
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateUpdateProductFunction:
     Type: AWS::Serverless::Function
@@ -81,6 +88,8 @@ Resources:
             RestApiId: !Ref ProductApi
             Path: /products/{id}
             Method: put
+            Auth:
+              Authorizer: 'NONE'
 
   DeleteProductFunction:
     Type: AWS::Serverless::Function
@@ -98,6 +107,8 @@ Resources:
             RestApiId: !Ref ProductApi
             Path: /products/{id}
             Method: delete
+            Auth:
+              Authorizer: 'NONE'
 
   ProductsTable:
     Type: AWS::DynamoDB::Table
