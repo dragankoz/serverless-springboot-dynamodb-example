@@ -24,11 +24,6 @@ Resources:
     Properties:
       StageName: prod
       Name: My Lambda springboot JVM Example API
-      DefinitionBody:
-        Fn::Transform:
-          Name: AWS::Include
-          Parameters:
-            Location: ../../target/api-docs.yaml
       Auth:
         DefaultAuthorizer: AWS_IAM
 
