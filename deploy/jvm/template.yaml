@@ -28,6 +28,9 @@ Resources:
           Name: AWS::Include
           Parameters:
             Location: ../../target/api-docs.yaml
+        Auth:
+          ApiKeyRequired: true
+          Authorizer: NONE
 
   GetProductByIdFunction:
     Type: AWS::Serverless::Function

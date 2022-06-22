@@ -54,6 +54,9 @@ $ ./build/build-native-wsl.sh
 ```
 
 ### Deploy Native
+
+Run the deploy script and just press enter through all the defaults, will create a *samconfig.toml* file
+
 ```
 C:\> cd deploy\native
 C:\> deploy-aws.bat
@@ -68,11 +71,7 @@ Configuring SAM deploy
         #SAM needs permission to be able to create roles to connect to the resources in your template
         Allow SAM CLI IAM role creation [Y/n]:
         #Preserves the state of previously provisioned resources when an operation fails
-        Disable rollback [Y/n]:
-        GetProductByIdFunction may not have authorization defined, Is this okay? [y/N]: y
-        GetProductsFunction may not have authorization defined, Is this okay? [y/N]: y
-        CreateUpdateProductFunction may not have authorization defined, Is this okay? [y/N]: y
-        DeleteProductFunction may not have authorization defined, Is this okay? [y/N]: y
+        Disable rollback [Y/n]:       
         Save arguments to configuration file [Y/n]:
         SAM configuration file [samconfig.toml]:
         SAM configuration environment [default]:
@@ -97,6 +96,9 @@ C:\> mvnw clean integration-test -Pjvm
 ```
 
 ### Deploy JVM
+
+Run the deploy script and just press enter through all the defaults, will create a *samconfig.toml* file
+
 ```
 C:\> cd deploy\jvm
 C:\> deploy-aws.bat
@@ -115,11 +117,7 @@ Configuring SAM deploy
         #SAM needs permission to be able to create roles to connect to the resources in your template
         Allow SAM CLI IAM role creation [Y/n]:
         #Preserves the state of previously provisioned resources when an operation fails
-        Disable rollback [Y/n]:
-        GetProductByIdFunction may not have authorization defined, Is this okay? [y/N]: y
-        GetProductsFunction may not have authorization defined, Is this okay? [y/N]: y
-        CreateUpdateProductFunction may not have authorization defined, Is this okay? [y/N]: y
-        DeleteProductFunction may not have authorization defined, Is this okay? [y/N]: y
+        Disable rollback [Y/n]:        
         Save arguments to configuration file [Y/n]: 
         SAM configuration file [samconfig.toml]: 
         SAM configuration environment [default]: 
