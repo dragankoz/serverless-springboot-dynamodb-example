@@ -30,9 +30,6 @@ Resources:
             Location: ../../target/api-docs.yaml
       Auth:
         DefaultAuthorizer: AWS_IAM
-        Authorizers:
-          Dummy:
-            FunctionArn: !GetAtt GetProductByIdFunction.Arn
 
   GetProductByIdFunction:
     Type: AWS::Serverless::Function
